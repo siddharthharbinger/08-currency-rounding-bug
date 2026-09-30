@@ -3,6 +3,24 @@ def split_amount_cents(total_cents: int, num_splits: int) -> list[int]:
     if num_splits <= 0:
         raise ValueError("num_splits must be greater than 0")
 
-    # Bug: floor division without distributing remainder causes lost cents
+    # Compute the base share for each participant and the remainder that cannot be evenly divided.
     base_share = total_cents // num_splits
-    return [base_share] * num_splits
+    remainder = total_cents % num_splits
+
+    # Initialise all splits with the base share.
+    splits = [base_share] * num_splits
+
+    # Distribute the leftover cents one by one to the first `remainder` splits.
+    for i in range(remainder):
+        splits[i] += 1
+
+    return splits
+
+    # Initialise all splits with the base share.
+    splits = [base_share] * num_splits
+
+    # Distribute the leftover cents one by one to the first `remainder` splits.
+    for i in range(remainder):
+        splits[i] += 1
+
+    return splits
